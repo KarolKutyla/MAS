@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="refresh">
+    <title>theater_play</title>
+    <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+    <script>
+        function postForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const Sztuka = {
+                nazwa: form.nazwa.value,
+                opis: form.opis.value
+            };
+
+            fetch('/organizer/addSztuka', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Sztuka)
+            });
+        }
+
+        function getRekwizyty(event, id)
+        {
+
+        }
+        function deleteForm(event, id) {
+            event.preventDefault();
+            const Message = {
+                ID_Sztuka: id
+            };
+
+            fetch('/organizer/deleteSztuka', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Message)
+            });
+        }
+    </script>
+</head>
+<body>
+<div th:insert="~{layout :: strap}"></div>
+<div>
+    <p>Dodaj nowy przedmiot:</p>
+    <form onsubmit="postForm(event)">
+        <div class="form-group">
+            <label for="nazwa">Nazwa sztuki:</label>
+            <input type="text" id="nazwa" name="nazwa" th:value="${nazwa}">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="opis">Opis: </label>
+            <input style="width: 400px; height: 60px" type="text" id="opis" name="opis" th:value="${opis}">
+        </div>
+        <br>
+        <button type="submit" style="background-color: #FFC300">Send</button>
+    </form>
+</div>
+<div>
+    <p>Obecne sztuki:</p>
+    <table>
+        <tr>
+            <td>Nazwa</td>
+            <td>Opis</td>
+            <td></td>
+        </tr>
+        <tr th:each="rekwizyt : ${rekwizyty}">
+            <td th:text="${rekwizyt.nazwa_rekwizytu}"></td>
+            <td th:text="${rekwizyt.opis_rekwizytu}"></td>
+            <form th:id = "${sztuka.ID_Sztuka}" onsubmit="getRekwizyty(event, this.id)">
+                <td><button th:text="Edit" type="submit"></button> </td>
+            </form>
+            <form th:id = "${sztuka.ID_Sztuka}" onsubmit="deleteForm(event, this.id)">
+                <td><button th:text="Remove" type="submit"></button></td>
+            </form>
+
+        </tr>
+
+
+    </table>
+</div>
+</body>
+</html>

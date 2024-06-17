@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:block="title">My Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+</head>
+<body>
+<div th:insert="~{layout :: strap}"></div>
+<div class="content">
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Poniedziałek</th>
+            <th>Wtorek</th>
+            <th>Środa</th>
+            <th>Czwartek</th>
+            <th>Piątek</th>
+            <th>Sobota</th>
+            <th>Niedziela</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hour : ${#numbers.sequence(6, 23)}">
+            <td th:text="${hour} + ':00'"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

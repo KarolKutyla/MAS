@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F9F6EE;
+}
+body table thead tr
+{
+    background-color: #FF5733;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.strap {
+    padding: 10px;
+    margin: 5px;
+    background-color: #FFC300;
+    text-align: center;
+}
+
+nav a {
+    color: black;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    padding: 8px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.column{
+    float: left;
+    width: 50%;
+}
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Form</title>
+  <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+</head>
+<body>
+<h2>Dodaj Sztukę</h2>
+<label for="playName">Nazwa Sztuki:</label>
+<input type="text" id="playName" name="playName"><br>
+<label for="playDescription">Opis Sztuki:</label>
+<input type="text" id="playDescription" name="playDescription"><br>
+<button type="button" onclick="addPlay()">Dodaj Sztukę</button>
+<hr>
+<h2>Aktualna Sztuka:</h2>
+<p id="currentPlay"></p>
+<hr>
+
+<h2>Dodaj Rolę</h2>
+<label for="roleName">Nazwa Roli:</label>
+<input type="text" id="roleName" name="roleName"><br>
+<label for="roleDescription">Opis Roli:</label>
+<input type="text" id="roleDescription" name="roleDescription"><br>
+<button type="button" onclick="addRole()">Dodaj Rolę</button>
+<hr>
+<h2>Aktualne Role:</h2>
+<table id="rolesTable">
+  <thead>
+  <tr>
+    <th>Nazwa Roli</th>
+    <th>Opis Roli</th>
+    <th>Akcje</th>
+  </tr>
+  </thead>
+  <tbody id="rolesBody"></tbody>
+</table>
+<hr>
+
+<button type="button" onclick="submitForm()">Zapisz</button>
+
+<script>
+  let play = {};
+  let roles = [];
+
+  function addPlay() {
+    let playName = document.getElementById('playName').value;
+    let playDescription = document.getElementById('playDescription').value;
+    play = { "playName": playName, "playDescription": playDescription };
+    document.getElementById('currentPlay').innerText = `Nazwa Sztuki: ${playName}, Opis Sztuki: ${playDescription}`;
+  }
+
+  function addRole() {
+    let roleName = document.getElementById('roleName').value;
+    let roleDescription = document.getElementById('roleDescription').value;
+    let role = { "roleName": roleName, "roleDescription": roleDescription };
+    roles.push(role);
+    displayRoles();
+  }
+
+  function displayRoles() {
+    let rolesTable = document.getElementById('rolesTable');
+    let rolesBody = document.getElementById('rolesBody');
+    rolesBody.innerHTML = '';
+    roles.forEach((role, index) => {
+      let row = rolesBody.insertRow();
+      let nameCell = row.insertCell(0);
+      let descCell = row.insertCell(1);
+      let actionCell = row.insertCell(2);
+      nameCell.innerText = role.roleName;
+      descCell.innerText = role.roleDescription;
+      let deleteButton = document.createElement('button');
+      deleteButton.innerText = 'Usuń';
+      deleteButton.onclick = function() {
+        deleteRole(index);
+      };
+      actionCell.appendChild(deleteButton);
+    });
+  }
+
+  function deleteRole(index) {
+    roles.splice(index, 1);
+    displayRoles();
+  }
+
+  function submitForm() {
+    let data = {
+      "play": play,
+      "roles": roles
+    };
+    console.log("Dane do wysłania:", data);
+
+    // Tutaj możesz wysłać dane za pomocą fetch lub AJAX
+    // fetch('/submit', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log("Odpowiedź serwera:", data);
+    // })
+    // .catch(error => console.error('Błąd:', error));
+  }
+</script>
+</body>
+</html>

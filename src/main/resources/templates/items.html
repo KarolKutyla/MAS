@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset ="UTF-8">
+    <title>Magazyn</title>
+    <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+</head>
+<body>
+<div th:insert="~{layout :: strap}"></div>
+<table>
+    <tr>
+        <th>Identyfikator Magazynowy</th>
+        <th>Nazwa</th>
+        <th>Opis</th>
+    </tr>
+    <tr th:each = "w: ${wyposazenie}">
+        <td><input type = "text" name="id" th:value="${w.getIdentyfikator_magazynowy()}"/></td>
+        <td><input type = "text" name="nazwa" th:value="${w.getNazwa() ?: 'brak nazwy'}"/></td>
+        <td th:text="${w.getOpis() ?: 'brak opisu'}"></td>
+
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formularz Thymeleaf</title>
+    <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+</head>
+<body>
+<div th:insert="~{layout :: strap}"></div>
+<div class="row">
+<div class="column">
+    <p>Dodaj nową sztukę:</p>
+    <form th:action="@{/organizer/insertWyposazenie}" method="post">
+        <div class="form-group">
+            <label for="theaterPlayName">Nazwa przedstawienia:</label>
+            <input type="text" id="theaterPlayName" name="name" th:value="${theaterPlayName}">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="theaterPlayDescription">Opis: </label>
+            <input style="width: 400px; height: 60px" type="text" id="theaterPlayDescription" name="description" th:value="${theaterPlayDescription}">
+        </div>
+        <br>
+        <button type="submit" style="background-color: #FFC300">Send</button>
+    </form>
+</div>
+    <div class="column">
+        <p>Obecna nazwa: </p>
+        <br>
+        <p th:text="${theaterPlayName}"></p>
+        <p>Obecny opis:</p>
+        <br>
+    </div>
+</div>
+</body>
+</html>

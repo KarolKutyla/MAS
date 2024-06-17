@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic List</title>
+  <script>
+    function addPlay()
+    {
+      var playNameInput = document.getElementById('playName').value;
+      var playDescriptionInput = document.getElementById('playDescription').value;
+      var playName = document.getElementById('playName');
+      var playDescription = document.getElementById('playDescription');
+      playName.value = playNameInput;
+      playDescription.value = playDescriptionInput;
+    }
+    function addRole() {
+      var list = document.getElementById('dynamic-list');
+      var newElement = document.createElement('li');
+      var inputValue = document.getElementById('newRole').value;
+      newElement.textContent = inputValue;
+
+      // Add hidden input to include element in form submission
+      var hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = 'elements';
+      hiddenInput.value = inputValue;
+      newElement.appendChild(hiddenInput);
+
+      list.appendChild(newElement);
+      document.getElementById('newElement').value = '';
+    }
+
+    function updateList(newElements) {
+      var list = document.getElementById('dynamic-list');
+      list.innerHTML = '';
+      newElements.forEach(function(element) {
+        var li = document.createElement('li');
+        li.textContent = element;
+
+        // Add hidden input to include element in form submission
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'elements';
+        hiddenInput.value = element;
+        li.appendChild(hiddenInput);
+
+        list.appendChild(li);
+      });
+    }
+
+    function submitForm() {
+      var elements = Array.from(document.querySelectorAll('#dynamic-list input[name="elements"]'))
+              .map(input => input.value);
+      console.log(String(JSON.stringify({"play": "123","roles": elements})))
+      fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(elements)
+      })
+              .then(response => response.json())
+              .then(data => {
+                updateList(data);
+              });
+    }
+  </script>
+  <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+</head>
+<body>
+<p>Sztuka:</p>
+<label for="playName">Nazwa sztuki</label>
+<input type="text" id="playName" name="playName">
+<label for="playDescription"></label>
+<input type="text" id="playDescription" name="playDescription">
+<button type="button" onclick="addPlay()">Zaakceptuj</button>
+<br>
+<p id="currentPlay" th:if="${playName}">
+  Wybrano: <span th:text="${playName}"></span>
+</p>
+<hr>
+<label for="newRole">Nowa Rola:</label>
+<input type="text" id="newRole" name="newRole">
+<button type="button" onclick="addRole()">Dodaj rolę</button>
+
+<ul id="dynamic-list">
+  <li th:each="element : ${elements}">
+    <span th:text="${element}"></span>
+    <input type="hidden" name="elements" th:value="${element}" />
+  </li>
+</ul>
+
+
+<button type="button" onclick="submitForm()">Zatwierdź</button>
+</body>
+</html>

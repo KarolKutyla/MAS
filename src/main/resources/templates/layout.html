@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Powinien być tytuł</title>
+  <style th:fragment="style">
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F9F6EE;
+    }
+    .strap {
+      padding: 10px;
+      margin: 5px;
+      background-color: #FFC300;
+      text-align: center;
+    }
+    nav a {
+      color: black;
+      font-size: 1.2em;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<div th:fragment="strap">
+    <nav class="strap">
+        <a href="/">Teatr.java</a>
+        <a href="/schedule">Sztuki Teatralne</a>
+        <a href="/news">Nowosći</a>
+        <a href="/add_theaterPlay">Dodaj Dostęp</a>
+        <a href="/organizer/getSztuka">Sztuki</a>
+    </nav>
+    <hr>
+</div>
+  <div>Powinien być content</div>
+</body>
+</html>
